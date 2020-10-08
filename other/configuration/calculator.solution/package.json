@@ -46,6 +46,9 @@
     "react-loadable": "5.3.1",
     "react-point": "3.0.1"
   },
+  "jest": {
+    "testEnvironment":"jest-environment-jsdom"
+  },
   "babel": {
     "presets": "./.babelrc.js"
   }
