@@ -11,8 +11,15 @@ module.exports = {
     '\\.css$': require.resolve('./test/style-mock.js'),
     // can also map files that are loaded by webpack with the file-loader
   },
-  // normally you'd put this here
+  // normally you'd put this here, only add coverage from src folder
   // collectCoverageFrom: ['**/src/**/*.js'],
+  // coverage threshold
+  // coverageThreshold: {
+  //   global: {statements: 18},
+  //   branches: 10,
+  //   functions: 19,
+  //   lines: 18,
+  // },
 }
 
 // however, that kinda messes up my setup in this workshop repo
