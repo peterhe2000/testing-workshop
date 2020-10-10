@@ -119,7 +119,7 @@ Snapshot tests below. We'll cover these later
 
  */
 
-test('manual "snapshot"', () => {
+test.only('manual "snapshot"', () => {
   const flyingHeros = getFlyingSuperHeros()
   expect(flyingHeros).toEqual([
     {name: 'Dynaguy', powers: ['disintegration ray', 'fly']},
@@ -141,7 +141,10 @@ test('snapshot examples', () => {
     someFunction: () => {},
     symbol: Symbol('symbol description'),
     set: new Set([1, 2, 3]),
-    map: new Map([[{}, []], [[], {}]]),
+    map: new Map([
+      [{}, []],
+      [[], {}],
+    ]),
     // and more!
   }
   expect(object).toMatchSnapshot()
