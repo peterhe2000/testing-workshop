@@ -1,7 +1,15 @@
 // dealing with react's simulated events
 import React from 'react'
 import {generate} from 'til-client-test-utils'
-import {render, Simulate} from 'react-testing-library'
+import {
+  renderIntoDocument,
+  render,
+  Simulate,
+  cleanup,
+  fireEvent,
+  wait,
+  waitForElement,
+} from 'react-testing-library'
 import Login from '../login'
 
 // Due to the fact that our element is not in the document, the
@@ -21,29 +29,35 @@ import Login from '../login'
 //
 // Extra bonus, rather than manually inserting the container into the document
 // check out the docs for react-testing-library and the renderIntoDocument method!
+afterEach(cleanup) // Don't forget to cleanup after yourselve when you're finished so you don't
+// renderIntoDocument usually go with cleanup
+
+jest.useFakeTimers()
 
 test('calls onSubmit with the username and password when submitted', () => {
   // Arrange
   const fakeUser = generate.loginForm()
   const handleSubmit = jest.fn()
-  const {container, getByLabelText, getByText} = render(
+  const {getByLabelText, getByText, unmount} = renderIntoDocument(
     <Login onSubmit={handleSubmit} />,
   )
 
   const usernameNode = getByLabelText('username')
   const passwordNode = getByLabelText('password')
-  const formNode = container.querySelector('form')
   const submitButtonNode = getByText('submit')
 
   // Act
   usernameNode.value = fakeUser.username
   passwordNode.value = fakeUser.password
-  Simulate.submit(formNode)
+  //Simulate.submit(formNode)
+  submitButtonNode.click() // or fireEvent.click(submitButtonNode) // fire actual event new window.event('submit') similar api to simulator
+  // jest.runAllTimers() // skip those time in the test
 
   // Assert
   expect(handleSubmit).toHaveBeenCalledTimes(1)
   expect(handleSubmit).toHaveBeenCalledWith(fakeUser)
-  expect(submitButtonNode.type).toBe('submit')
+  unmount() // manual unmount from dom
+  //expect(submitButtonNode.type).toBe('submit') dont need this since renderIntoDocument does actual click
 })
 
 //////// Elaboration & Feedback /////////
