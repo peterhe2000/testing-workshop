@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:e2e:dev": "npm-run-all --parallel dev cy:open",
     "test": "jest",
     "dev": "webpack-dev-server --mode=development",
     "build": "webpack --mode=production",
