@@ -32,6 +32,7 @@ test('snapshot', () => {
   // expect the `container` property to match a snapshot
   const {container} = render(<Login />)
   expect(container.firstChild).toMatchSnapshot()
+  //expect(container.firstChild).toThrowErrorMatchingSnapshot() // match error
 })
 
 //////// Elaboration & Feedback /////////
